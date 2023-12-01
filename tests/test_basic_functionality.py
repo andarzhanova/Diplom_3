@@ -14,7 +14,7 @@ class TestBasicFunctionality:
     def test_switch_on_order_feed_click_order_feed_button_order_feed_url(self, authorized_user):
         driver = authorized_user
         main_page = MainPage(driver)
-        main_page.click_order_feed()
+        main_page.click_order_feed_button()
         order_feed_page = OrderFeedPage(driver)
         order_feed_page.check_switch_on_order_feed()
 

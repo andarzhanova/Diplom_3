@@ -39,7 +39,7 @@ class TestOrderFeed:
         driver = authorization
         payload, token = user_data
         main_page = MainPage(driver)
-        main_page.click_order_feed()
+        main_page.click_order_feed_button()
         order_feed_page = OrderFeedPage(driver)
         order_feed_page.check_increasing_counter(counter, token)
 

@@ -54,7 +54,3 @@ class BaselPage:
     def wait_for_text_to_be_present_in_element(self, locator, text):
         WebDriverWait(self.driver, 15).until(
             expected_conditions.text_to_be_present_in_element(locator, text))
-
-    def click_on_element_js(self, locator):
-        elm = self.driver.find_element(*locator)
-        self.driver.execute_script("arguments[0].click();", elm)

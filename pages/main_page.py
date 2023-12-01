@@ -13,7 +13,7 @@ class MainPage(BaselPage):
     @allure.step('Нажимаем кнопку «Лента Заказов»')
     def click_order_feed_button(self):
         self.wait_for_element_to_be_clickable(MainPageLocators.ORDER_FEED_BUTTON)
-        self.click_on_element_js(MainPageLocators.ORDER_FEED_BUTTON)
+        self.click_on_element(MainPageLocators.ORDER_FEED_BUTTON)
 
     @allure.step('Проверяем переход на главную страницу')
     def check_switch_on_main_page(self):
@@ -43,8 +43,3 @@ class MainPage(BaselPage):
         self.wait_for_visibility_of_element(MainPageLocators.ORDER_ID)
         actually_text = self.get_actually_text(MainPageLocators.ORDER_ID)
         assert actually_text == MainPageConstants.ORDER_ID
-
-    @allure.step('Нажимаем кнопку «Лента Заказов»')
-    def click_order_feed(self):
-        self.wait_for_element_to_be_clickable(MainPageLocators.ORDER_FEED_BUTTON)
-        self.click_on_element(MainPageLocators.ORDER_FEED_BUTTON)
