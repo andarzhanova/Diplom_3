@@ -9,8 +9,7 @@ from locators.order_feed_locators import OrderFeedLocators
 class TestOrderFeed:
     @allure.title('Проверка появления всплывающего окна с деталями')
     @allure.description('Кликаем на заказ и проверяем, что появилось всплывающее окно с деталями')
-    def test_window_with_details_click_on_order_show_window(self, browser):
-        driver = browser
+    def test_window_with_details_click_on_order_show_window(self, driver):
         main_page = MainPage(driver)
         main_page.click_order_feed_button()
         order_feed_page = OrderFeedPage(driver)

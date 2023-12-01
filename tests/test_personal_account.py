@@ -12,8 +12,8 @@ class TestPersonalAccount:
         'Нажимаем на кнопку «Личный кабинет» и проверяем, '
         'что произошёл переход на страницу профиля'
     )
-    def test_switch_on_profile_click_personal_account_button_profile_url(self, authorized_user):
-        driver = authorized_user
+    def test_switch_on_profile_click_personal_account_button_profile_url(self, authorization):
+        driver = authorization
         main_page = MainPage(driver)
         main_page.click_personal_account_button()
         profile_page = ProfilePage(driver)
@@ -24,7 +24,10 @@ class TestPersonalAccount:
         'Нажимаем на кнопку «История заказов» и проверяем, '
         'что произошёл переход в раздел истории заказов'
     )
-    def test_switch_on_order_history_click_order_history_button_order_history_url(self, driver):
+    def test_switch_on_order_history_click_order_history_button_order_history_url(self, authorization):
+        driver = authorization
+        main_page = MainPage(driver)
+        main_page.click_personal_account_button()
         profile_page = ProfilePage(driver)
         profile_page.click_order_history_button()
         order_history_page = OrderHistoryPage(driver)
@@ -35,7 +38,10 @@ class TestPersonalAccount:
         'Нажимаем на кнопку «Выход» и проверяем, '
         'что произошёл выхода из аккаунта и переход на страницу входа'
     )
-    def test_log_out_click_log_out_button_order_login_url(self, driver):
+    def test_log_out_click_log_out_button_order_login_url(self, authorization):
+        driver = authorization
+        main_page = MainPage(driver)
+        main_page.click_personal_account_button()
         order_history_page = OrderHistoryPage(driver)
         order_history_page.click_log_out_button()
         login_page = LoginPage(driver)

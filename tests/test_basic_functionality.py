@@ -11,8 +11,7 @@ class TestBasicFunctionality:
         'Нажимаем на кнопку «Лента Заказов» и проверяем, '
         'что произошёл переход на страницу Ленты заказов'
     )
-    def test_switch_on_order_feed_click_order_feed_button_order_feed_url(self, authorized_user):
-        driver = authorized_user
+    def test_switch_on_order_feed_click_order_feed_button_order_feed_url(self, driver):
         main_page = MainPage(driver)
         main_page.click_order_feed_button()
         order_feed_page = OrderFeedPage(driver)
@@ -40,6 +39,8 @@ class TestBasicFunctionality:
     @allure.title('Проверка закрывания окна кликом по крестику')
     @allure.description('Кликаем по крестику и проверяем, что всплывающее окно закрылось')
     def test_window_closed_click_close_button_header_not_displayed(self, driver):
+        main_page = MainPage(driver)
+        main_page.click_on_ingredient()
         ingredient_details_pages = IngredientDetailsPage(driver)
         ingredient_details_pages.click_close_button()
         ingredient_details_pages.check_window_closed()
@@ -61,7 +62,9 @@ class TestBasicFunctionality:
         'Нажимаем кнопку «Оформить заказ» и проверяем, '
         ' что заказ оформлен и появился идентификатор заказа'
     )
-    def test_making_an_order_click_checkout_button_show_window_with_order_id(self, driver):
+    def test_making_an_order_click_checkout_button_show_window_with_order_id(self, authorization):
+        driver = authorization
         main_page = MainPage(driver)
+        main_page.add_ingredient()
         main_page.click_checkout_button()
         main_page.check_show_window_with_order_id()

@@ -6,9 +6,11 @@ from data.api_constants import ApiConstants
 from data.urls_constants import UrlsConstants
 from pages.main_page import MainPage
 from pages.login_page import LoginPage
+from pages.forgot_pass_page import ForgotPasswordPage
+from data.forgot_password_constants import ForgotPasswordConstants
 
 
-@pytest.fixture(scope='class', params=['firefox', 'chrome'])
+@pytest.fixture(params=['firefox', 'chrome'])
 def driver(request):
     if request.param == 'firefox':
         browser = webdriver.Firefox()
@@ -21,31 +23,23 @@ def driver(request):
     browser.quit()
 
 
-@pytest.fixture(scope='class')
-def authorized_user(driver):
-    payload = helpers.payload
-    response = requests.post(ApiConstants.CREATE_USER, data=payload)
+@pytest.fixture
+def password_recovery(driver):
     main_page = MainPage(driver)
     main_page.click_personal_account_button()
     login_page = LoginPage(driver)
-    login_page.login(payload["email"], payload["password"])
-
-    yield driver
-    token = response.json()['accessToken']
-    requests.delete(ApiConstants.DELETE_USER, headers={'Authorization': token})
+    login_page.click_restore_password_button()
+    return driver
 
 
-@pytest.fixture(params=['firefox', 'chrome'])
-def browser(request):
-    if request.param == 'firefox':
-        browser = webdriver.Firefox()
-        browser.get(UrlsConstants.STELLAR_BURGERS)
-    if request.param == 'chrome':
-        browser = webdriver.Chrome()
-        browser.get(UrlsConstants.STELLAR_BURGERS)
-
-    yield browser
-    browser.quit()
+@pytest.fixture
+def forgot_pass_page(password_recovery):
+    driver = password_recovery
+    forgot_pass_page = ForgotPasswordPage(driver)
+    forgot_pass_page.click_email_field()
+    forgot_pass_page.set_email(ForgotPasswordConstants.EMAIL)
+    forgot_pass_page.click_recover_button()
+    return driver
 
 
 @pytest.fixture
@@ -61,8 +55,7 @@ def user_data():
 
 
 @pytest.fixture
-def authorization(browser, user_data):
-    driver = browser
+def authorization(driver, user_data):
     payload, token = user_data
     main_page = MainPage(driver)
     main_page.click_personal_account_button()
