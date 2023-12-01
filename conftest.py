@@ -1,9 +1,6 @@
 import pytest
 import requests
 from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
-from webdriver_manager.firefox import GeckoDriverManager
 import helpers
 from data.api_constants import ApiConstants
 from data.urls_constants import UrlsConstants
@@ -14,12 +11,10 @@ from pages.login_page import LoginPage
 @pytest.fixture(scope='class', params=['firefox', 'chrome'])
 def driver(request):
     if request.param == 'firefox':
-        service = GeckoDriverManager().install()
-        browser = webdriver.Firefox(service=Service(service))
+        browser = webdriver.Firefox()
         browser.get(UrlsConstants.STELLAR_BURGERS)
-    if request.param == 'chrome':
-        service = ChromeDriverManager().install()
-        browser = webdriver.Chrome(service=Service(service))
+    elif request.param == 'chrome':
+        browser = webdriver.Chrome()
         browser.get(UrlsConstants.STELLAR_BURGERS)
 
     yield browser
@@ -43,12 +38,10 @@ def authorized_user(driver):
 @pytest.fixture(params=['firefox', 'chrome'])
 def browser(request):
     if request.param == 'firefox':
-        service = GeckoDriverManager().install()
-        browser = webdriver.Firefox(service=Service(service))
+        browser = webdriver.Firefox()
         browser.get(UrlsConstants.STELLAR_BURGERS)
     if request.param == 'chrome':
-        service = ChromeDriverManager().install()
-        browser = webdriver.Chrome(service=Service(service))
+        browser = webdriver.Chrome()
         browser.get(UrlsConstants.STELLAR_BURGERS)
 
     yield browser
