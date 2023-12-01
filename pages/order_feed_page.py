@@ -3,16 +3,15 @@ import requests
 from locators.order_feed_locators import OrderFeedLocators
 from pages.base_page import BaselPage
 from data.api_constants import ApiConstants
+from data.urls_constants import UrlsConstants
 
 
 class OrderFeedPage(BaselPage):
-    ORDER_FEED_URL = "https://stellarburgers.nomoreparties.site/feed"  # URL страницы "Лента заказов"
-
     @allure.step('Проверяем переход на страницу Ленты заказов')
     def check_switch_on_order_feed(self):
         self.wait_for_visibility_of_element(OrderFeedLocators.ORDER_FEED_HEADER)
         current_url = self.get_current_url()
-        assert current_url == self.ORDER_FEED_URL
+        assert current_url == UrlsConstants.ORDER_FEED_URL
 
     @allure.step('Нажимаем кнопку «Конструктор»')
     def click_constructor_button(self):

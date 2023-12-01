@@ -1,11 +1,10 @@
 import allure
 from locators.login_page_locators import LoginPageLocators
 from pages.base_page import BaselPage
+from data.urls_constants import UrlsConstants
 
 
 class LoginPage(BaselPage):
-    LOGIN_URL = "https://stellarburgers.nomoreparties.site/login"  # URL страницы "Вход"
-
     @allure.step('Нажимаем кнопку «Восстановить пароль»')
     def click_restore_password_button(self):
         self.wait_for_element_to_be_clickable(LoginPageLocators.RESTORE_PASSWORD_LINK)
@@ -44,4 +43,4 @@ class LoginPage(BaselPage):
     def check_switch_on_login_page(self):
         self.wait_for_visibility_of_element(LoginPageLocators.LOGIN_HEADER)
         current_url = self.get_current_url()
-        assert current_url == self.LOGIN_URL
+        assert current_url == UrlsConstants.LOGIN_URL
