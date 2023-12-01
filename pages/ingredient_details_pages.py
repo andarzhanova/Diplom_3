@@ -1,9 +1,9 @@
 import allure
 from locators.ingredient_details_locators import IngredientDetailsLocators
-from pages.base_page import BaselPage
+from pages.base_page import BasePage
 
 
-class IngredientDetailsPage(BaselPage):
+class IngredientDetailsPage(BasePage):
     WINDOW_HEADER = "Детали ингредиента"  # Заголовок всплывающего окна
 
     @allure.step('Проверяем, что появилось всплывающее окно с деталями')

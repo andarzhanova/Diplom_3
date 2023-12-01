@@ -1,10 +1,10 @@
 import allure
 from locators.main_page_locators import MainPageLocators
-from pages.base_page import BaselPage
+from pages.base_page import BasePage
 from data.main_page_constants import MainPageConstants
 
 
-class MainPage(BaselPage):
+class MainPage(BasePage):
     @allure.step('Нажимаем кнопку «Личный кабинет»')
     def click_personal_account_button(self):
         self.wait_for_element_to_be_clickable(MainPageLocators.PERSONAL_ACCOUNT_BUTTON)

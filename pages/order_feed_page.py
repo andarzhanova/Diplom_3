@@ -1,12 +1,12 @@
 import allure
 import requests
 from locators.order_feed_locators import OrderFeedLocators
-from pages.base_page import BaselPage
+from pages.base_page import BasePage
 from data.api_constants import ApiConstants
 from data.urls_constants import UrlsConstants
 
 
-class OrderFeedPage(BaselPage):
+class OrderFeedPage(BasePage):
     @allure.step('Проверяем переход на страницу Ленты заказов')
     def check_switch_on_order_feed(self):
         self.wait_for_visibility_of_element(OrderFeedLocators.ORDER_FEED_HEADER)

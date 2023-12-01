@@ -1,10 +1,10 @@
 import allure
 from locators.profile_page_locators import ProfilePageLocators
-from pages.base_page import BaselPage
+from pages.base_page import BasePage
 from data.urls_constants import UrlsConstants
 
 
-class ProfilePage(BaselPage):
+class ProfilePage(BasePage):
     @allure.step('Проверяем переход на страницу профиля')
     def check_switch_on_profile(self):
         self.wait_for_visibility_of_element(ProfilePageLocators.PROFILE_BUTTON)

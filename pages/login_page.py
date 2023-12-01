@@ -1,10 +1,10 @@
 import allure
 from locators.login_page_locators import LoginPageLocators
-from pages.base_page import BaselPage
+from pages.base_page import BasePage
 from data.urls_constants import UrlsConstants
 
 
-class LoginPage(BaselPage):
+class LoginPage(BasePage):
     @allure.step('Нажимаем кнопку «Восстановить пароль»')
     def click_restore_password_button(self):
         self.wait_for_element_to_be_clickable(LoginPageLocators.RESTORE_PASSWORD_LINK)
