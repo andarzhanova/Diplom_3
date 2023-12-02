@@ -1,13 +1,12 @@
 import pytest
-import requests
 from selenium import webdriver
 import helpers
-from data.api_constants import ApiConstants
 from data.urls_constants import UrlsConstants
 from pages.main_page import MainPage
 from pages.login_page import LoginPage
 from pages.forgot_pass_page import ForgotPasswordPage
 from data.forgot_password_constants import ForgotPasswordConstants
+from data.api_requests import Requests
 
 
 @pytest.fixture(params=['firefox', 'chrome'])
@@ -46,12 +45,12 @@ def forgot_pass_page(password_recovery):
 def user_data():
     data = []
     payload = helpers.payload
-    token = requests.post(ApiConstants.CREATE_USER, data=payload).json()['accessToken']
+    token = Requests.get_token(payload)
     data.append(payload)
     data.append(token)
 
     yield data
-    requests.delete(ApiConstants.DELETE_USER, headers={'Authorization': token})
+    Requests.delete_user(token)
 
 
 @pytest.fixture
@@ -67,9 +66,9 @@ def authorization(driver, user_data):
 @pytest.fixture
 def orders_numbers(user_data):
     payload, token = user_data
-    requests.post(ApiConstants.ORDER, headers={'Authorization': token}, data=ApiConstants.INGREDIENTS)
-    requests.post(ApiConstants.ORDER, headers={'Authorization': token}, data=ApiConstants.INGREDIENTS)
-    user_orders = requests.get(ApiConstants.ORDER, headers={'Authorization': token}).json()["orders"]
+    Requests.create_order(token)
+    Requests.create_order(token)
+    user_orders = Requests.get_user_orders(token)
     orders_numbers = []
     for order in user_orders:
         orders_numbers.append(order["number"])
