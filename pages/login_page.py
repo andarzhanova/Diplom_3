@@ -1,7 +1,6 @@
 import allure
 from locators.login_page_locators import LoginPageLocators
 from pages.base_page import BasePage
-from data.urls_constants import UrlsConstants
 
 
 class LoginPage(BasePage):
@@ -42,5 +41,4 @@ class LoginPage(BasePage):
     @allure.step('Проверяем переход на страницу Вход')
     def check_switch_on_login_page(self):
         self.wait_for_visibility_of_element(LoginPageLocators.LOGIN_HEADER)
-        current_url = self.get_current_url()
-        assert current_url == UrlsConstants.LOGIN_URL
+        return self.get_current_url()

@@ -1,7 +1,6 @@
 import allure
 from locators.main_page_locators import MainPageLocators
 from pages.base_page import BasePage
-from data.main_page_constants import MainPageConstants
 
 
 class MainPage(BasePage):
@@ -18,8 +17,7 @@ class MainPage(BasePage):
     @allure.step('Проверяем переход на главную страницу')
     def check_switch_on_main_page(self):
         self.wait_for_visibility_of_element(MainPageLocators.BURGER_HEADER)
-        current_url = self.get_current_url()
-        assert current_url == MainPageConstants.MAIN_PAGE_URL
+        return self.get_current_url()
 
     @allure.step('Кликаем на ингредиент')
     def click_on_ingredient(self):
@@ -41,5 +39,4 @@ class MainPage(BasePage):
     @allure.step('Проверяем, что заказ оформлен и появился идентификатор заказа')
     def check_show_window_with_order_id(self):
         self.wait_for_visibility_of_element(MainPageLocators.ORDER_ID)
-        actually_text = self.get_actually_text(MainPageLocators.ORDER_ID)
-        assert actually_text == MainPageConstants.ORDER_ID
+        return self.get_actually_text(MainPageLocators.ORDER_ID)

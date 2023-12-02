@@ -14,7 +14,8 @@ class TestOrderFeed:
         main_page.click_order_feed_button()
         order_feed_page = OrderFeedPage(driver)
         order_feed_page.click_on_order()
-        order_feed_page.check_show_window_with_details()
+        displayed = order_feed_page.check_show_window_with_details()
+        assert displayed
 
     @allure.title('Проверка отображения заказов пользователя в Ленте заказов')
     @allure.description(
@@ -26,7 +27,9 @@ class TestOrderFeed:
         main_page = MainPage(driver)
         main_page.click_order_feed_button()
         order_feed_page = OrderFeedPage(driver)
-        order_feed_page.check_user_orders_in_feed_orders(orders_numbers)
+        feed_orders = order_feed_page.get_orders_numbers(orders_numbers)
+        for order_number in orders_numbers:
+            assert str(order_number) in feed_orders, 'Заказы пользователя не отображаются в Ленте заказов'
 
     @allure.title('Проверка увеличения значения счетчика заказов после создания нового заказа')
     @allure.description(
@@ -40,7 +43,10 @@ class TestOrderFeed:
         main_page = MainPage(driver)
         main_page.click_order_feed_button()
         order_feed_page = OrderFeedPage(driver)
-        order_feed_page.check_increasing_counter(counter, token)
+        prev_counter_value = order_feed_page.get_counter_value(counter)
+        order_feed_page.create_order(token)
+        current_counter_value = order_feed_page.get_counter_value(counter)
+        assert current_counter_value > prev_counter_value
 
     @allure.title('Проверка отображения номера заказа в разделе "В работе')
     @allure.description('Получаем номер нового заказа, и проверяем, что номер заказа появился в разделе "В работе"')
@@ -49,4 +55,6 @@ class TestOrderFeed:
         main_page = MainPage(driver)
         main_page.click_order_feed_button()
         order_feed_page = OrderFeedPage(driver)
-        order_feed_page.check_user_order_in_progress(orders_numbers)
+        last_order = order_feed_page.get_user_order(orders_numbers)
+        order_in_progress = order_feed_page.get_user_order_in_progress()
+        assert last_order == order_in_progress
